@@ -85,3 +85,10 @@ build:
 		$(if $(VERBOSE), --verbose)
 		
 .PHONY: build
+
+## Publish - Publish collection [VERBOSE]
+publish:
+	ansible-galaxy collection publish build/$(NAMESPACE)-$(COLLECTION)-$(VERSION).tar.gz \
+		--token $(ANSIBLE_GALAXY_TOKEN) \
+		$(if $(VERBOSE), --verbose)
+.PHONY: publish
