@@ -3,11 +3,13 @@ name: Path
 on:
   pull_request:
     paths:
+      # Common
       - .manala.yaml
       - .github/workflows/_lint.yaml
       - .github/workflows/_test.yaml
       # Dependencies
       - utils/**
+      # Collection
       - .github/workflows/path.yaml
       - path/**
   workflow_dispatch:
