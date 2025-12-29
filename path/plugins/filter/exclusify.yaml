@@ -1,0 +1,31 @@
+---
+
+DOCUMENTATION:
+  name: exclusify
+  author:
+    - Manala (@manala)
+  short_description: Ensure exclusivity against a list of path dicts, by marking the extras as absent
+  description:
+    - Ensure exclusivity against a list of path dicts, by marking the extras as absent.
+  positional: _input, againsts
+  options:
+    _input:
+      description: A list of path dicts.
+      type: list
+      elements: dict
+      required: true
+    againsts:
+      description: A list of path dicts.
+      type: list
+      elements: dict
+      required: true
+
+RETURN:
+  _value:
+    description: A list of path dicts, with extras marked as absents.
+    type: list
+    elements: dict
+
+EXAMPLES: |
+  - manala.path.path: "{{ item }}"
+    loop: "{{ [{'path': 'foo'}, {'path': 'bar'}] | manala.path.exclusify([{'path': 'bar'}, {'path': 'baz'}]) }}"

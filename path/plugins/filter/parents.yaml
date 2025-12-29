@@ -1,0 +1,26 @@
+---
+
+DOCUMENTATION:
+  name: parents
+  author:
+    - Manala (@manala)
+  short_description: Generate parent paths for each path in the provided list, inserting them immediately before
+  description:
+    - Generate parent paths for each path in the provided list, inserting them immediately before.
+  positional: _input
+  options:
+    _input:
+      description: A list of path dicts.
+      type: list
+      elements: dict
+      required: true
+
+RETURN:
+  _value:
+    description: A list containing the original paths and any generated parent paths.
+    type: list
+    elements: dict
+
+EXAMPLES: |
+  - manala.path.path: "{{ item }}"
+    loop: "{{ [{'path': 'foo/bar/baz'}, {'path': 'foo/bar/qux'}] | manala.path.parents() }}"

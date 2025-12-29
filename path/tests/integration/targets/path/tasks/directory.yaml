@@ -1,0 +1,60 @@
+---
+
+#############
+# Directory #
+#############
+
+- name: directory | Directory
+  tags: directory
+  vars:
+    root:
+      path: "{{ [playbook_dir, '..', '..', '..', 'path', 'directory'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
+    fixtures: []
+    paths:
+      - {path: implicit}
+      - {path: implicit_present, state: present}
+      - {path: explicit, state: directory}
+    expected:
+      - {path: implicit, exists: true, isdir: true}
+      - {path: implicit_present, exists: true, isdir: true}
+      - {path: explicit, exists: true, isdir: true}
+  block:
+
+    - name: directory | Prepare root
+      ansible.builtin.file:  # noqa: risky-file-permissions
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+      loop:
+        - {path: "{{ root.path }}", state: absent}
+        - {path: "{{ root.path }}", state: directory}
+
+    - name: directory | Prepare fixtures
+      ansible.builtin.file:  # noqa: risky-file-permissions
+        path: "{{ [root.path, item.path] | ansible.builtin.path_join }}"
+        state: "{{ item.state }}"
+        src: "{{ item.src | default(omit) }}"
+      loop: "{{ fixtures }}"
+
+    - name: directory | Converge
+      vars:
+        __path: "{{ item | manala.path.root(root) }}"
+      manala.path.path: "{{ __path }}"
+      loop: "{{ paths }}"
+      loop_control:
+        label: "{{ __path | manala.path.label }}"
+
+    - name: directory | Stats
+      ansible.builtin.stat:
+        path: "{{ [root.path, item.path] | ansible.builtin.path_join }}"
+      loop: "{{ expected }}"
+      register: stats
+
+    - name: directory | Verify
+      ansible.builtin.assert:
+        quiet: true
+        that:
+          - stats.results[index].stat.exists == expected[index].exists
+          - stats.results[index].stat.isdir == expected[index].isdir
+      loop: "{{ expected }}"
+      loop_control:
+        index_var: index

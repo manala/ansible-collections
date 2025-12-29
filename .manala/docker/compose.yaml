@@ -1,0 +1,33 @@
+name: manala-ansible-collections
+
+services:
+
+    ##########
+    # System #
+    ##########
+
+    system:
+        hostname: manala-ansible-collections
+        build:
+            context: ..
+            dockerfile: docker/Dockerfile
+        image: manala-ansible-collections:20251229101718
+        pull_policy: never
+        volumes:
+            - ../..:${MANALA_DIR}
+        tmpfs:
+            - /tmp:exec
+        environment:
+            MANALA_DIR: ${MANALA_DIR}
+            MANALA_CACHE_DIR: ${MANALA_CACHE_DIR}
+        env_file:
+            - ../../.env
+            - path: ../../.env.local
+              required: false
+        working_dir: ${MANALA_DIR}
+        networks:
+          - network
+
+networks:
+  network:
+    name: manala-ansible-collections

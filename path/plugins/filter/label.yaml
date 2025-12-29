@@ -1,0 +1,27 @@
+---
+
+DOCUMENTATION:
+  name: label
+  author:
+    - Manala (@manala)
+  short_description: Format a path dict as a loop label
+  description:
+    - Returns a formatted path dict to labelize a path into a loop.
+  positional: _input
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+
+RETURN:
+  _value:
+    description: A formatted path dict to labelize a path into a loop.
+    type: dict
+
+EXAMPLES: |
+  - manala.path.path: "{{ item }}"
+    loop:
+      - path: foo
+    loop_control:
+      label: "{{ item | manala.path.label }}"

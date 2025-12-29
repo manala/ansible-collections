@@ -1,0 +1,24 @@
+---
+
+DOCUMENTATION:
+  name: match
+  author:
+    - Manala (@manala)
+  short_description: Test if path dict match a pattern
+  description:
+    - Test if path dict match a pattern.
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+    pattern:
+      description: A pattern.
+      type: str
+      required: true
+
+EXAMPLES: |
+  - ansible.builtin.assert:
+      that:
+        - >
+          {'path': 'foo'} is manala.path.match('*f*')

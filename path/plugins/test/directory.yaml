@@ -1,0 +1,20 @@
+---
+
+DOCUMENTATION:
+  name: directory
+  author:
+    - Manala (@manala)
+  short_description: Test if path dict is a directory
+  description:
+    - Test if path dict is a directory.
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+
+EXAMPLES: |
+  - ansible.builtin.assert:
+      that:
+        - >
+          {'path': 'foo'} is manala.path.directory

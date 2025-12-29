@@ -1,0 +1,28 @@
+---
+
+# This playbook example contains simple use cases that illustrate the basics functionality of manala.path.path module.
+
+- name: Examples - Simple
+  gather_facts: false
+  hosts: localhost
+  tasks:
+
+    - name: Ensure a directory exists at path
+      manala.path.path:
+        path: /tmp/directory
+
+    - name: Ensure the specified path (file or directory) is absent
+      manala.path.path:
+        path: /tmp/file
+        state: absent
+
+    - name: Ensure the specified file at path contains content
+      manala.path.path:
+        path: /tmp/file_content
+        content: |
+          Hello World!
+
+    - name: Ensure the specified file at path contains rendered template content
+      manala.path.path:
+        path: /tmp/file_template
+        template: template.j2

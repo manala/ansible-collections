@@ -1,0 +1,29 @@
+---
+
+###########
+# Default #
+###########
+
+- name: default | Default
+  tags: default
+  vars:
+    data:
+      foo: foo
+      bar: foo
+    default:
+      bar: bar
+      baz: baz
+    expected:
+      foo: foo
+      bar: foo
+      baz: baz
+  block:
+
+    - name: default | Converge
+      ansible.builtin.set_fact:
+        actual: "{{ data | manala.utils.default(default) }}"
+
+    - name: default | Verify
+      ansible.builtin.assert:
+        that:
+          - actual == expected

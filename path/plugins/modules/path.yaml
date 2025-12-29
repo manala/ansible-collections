@@ -1,0 +1,15 @@
+---
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
+DOCUMENTATION:
+  module: path
+  author:
+    - Manala (@manala)
+  short_description: Handle a path dict
+  description:
+    - Handle a path dict.
+
+EXAMPLES: |
+  - name: Path
+    manala.path.path:
+      path: /foo/bar

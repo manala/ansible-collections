@@ -1,0 +1,19 @@
+---
+
+- name: Absent
+  ansible.builtin.import_tasks: absent.yaml
+
+- name: Directory
+  ansible.builtin.import_tasks: directory.yaml
+
+- name: File
+  ansible.builtin.import_tasks: file.yaml
+
+- name: Link
+  ansible.builtin.import_tasks: link.yaml
+
+- name: Defaults
+  ansible.builtin.import_tasks: defaults.yaml
+
+- name: Exclusify
+  ansible.builtin.import_tasks: exclusify.yaml

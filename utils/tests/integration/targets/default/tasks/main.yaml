@@ -1,0 +1,7 @@
+---
+
+- name: Default
+  ansible.builtin.import_tasks: default.yaml
+
+- name: Multiple
+  ansible.builtin.import_tasks: multiple.yaml

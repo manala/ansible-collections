@@ -1,0 +1,30 @@
+---
+
+DOCUMENTATION:
+  name: match
+  author:
+    - Manala (@manala)
+  short_description: Filter a list of path dicts matching a pattern
+  description:
+    - Filter a list of path dicts matching a pattern.
+  positional: _input
+  options:
+    _input:
+      description: A list of path dicts.
+      type: list
+      elements: dict
+      required: true
+    pattern:
+      description: A pattern.
+      type: str
+      required: true
+
+RETURN:
+  _value:
+    description: A list of matching path dicts.
+    type: list
+    elements: dict
+
+EXAMPLES: |
+  - manala.path.path: "{{ item }}"
+    loop: "{{ [{'path': 'foo'}, {'path': 'bar'}, {'path': 'foo'}] | manala.path.match('bar') }}"

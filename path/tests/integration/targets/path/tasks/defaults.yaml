@@ -1,0 +1,64 @@
+---
+
+############
+# Defaults #
+############
+
+- name: defaults | Defaults
+  tags: defaults
+  vars:
+    root:
+      path: "{{ [playbook_dir, '..', '..', '..', 'path', 'defaults'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
+    default_file:
+      mode: "0664"
+    default_directory:
+      mode: "0750"
+    paths:
+      - {path: directory, mode: "0755"}
+      - {path: directory_default}
+      - {path: file, file: file, mode: "0644"}
+      - {path: file_default, file: file}
+    expected:
+      - {path: directory, exists: true, isdir: true, isreg: false, mode: "0755"}
+      - {path: directory_default, exists: true, isdir: true, isreg: false, mode: "0750"}
+      - {path: file, exists: true, isdir: false, isreg: true, mode: "0644"}
+      - {path: file_default, exists: true, isdir: false, isreg: true, mode: "0664"}
+  block:
+
+    - name: defaults | Prepare root
+      ansible.builtin.file:  # noqa: risky-file-permissions
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+      loop:
+        - {path: "{{ root.path }}", state: absent}
+        - {path: "{{ root.path }}", state: directory}
+
+    - name: defaults | Converge
+      vars:
+        __path: "{{ item | manala.path.root(root)
+            | manala.path.default(default_file, state='file')
+            | manala.path.default(default_directory, state='directory')
+          }}"
+      manala.path.path: "{{ __path }}"
+      loop: "{{ paths }}"
+      loop_control:
+        label: "{{ __path | manala.path.label }}"
+      register: converge
+
+    - name: defaults | Stats
+      ansible.builtin.stat:
+        path: "{{ [root.path, item.path] | ansible.builtin.path_join }}"
+      loop: "{{ expected }}"
+      register: stats
+
+    - name: defaults | Verify
+      ansible.builtin.assert:
+        quiet: true
+        that:
+          - stats.results[index].stat.exists == expected[index].exists
+          - stats.results[index].stat.isdir == expected[index].isdir
+          - stats.results[index].stat.isreg == expected[index].isreg
+          - stats.results[index].stat.mode == expected[index].mode
+      loop: "{{ expected }}"
+      loop_control:
+        index_var: index

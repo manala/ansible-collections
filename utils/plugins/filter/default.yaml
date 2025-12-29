@@ -1,0 +1,31 @@
+---
+
+DOCUMENTATION:
+  name: default
+  author:
+    - Manala (@manala)
+  short_description: Apply default values to a dict or a list of dicts
+  description:
+    - Returns a dict or a list of dicts with default values applied for missing keys.
+  positional: _input, _defaults
+  options:
+    _input:
+      description: A dict, or a list of dicts.
+      type: raw
+      required: true
+    _defaults:
+      description: A list of dicts containing default values to apply.
+      type: dict
+      required: true
+
+RETURN:
+  _value:
+    description: A dict or a list of dicts with default values applied for missing keys.
+    type: raw
+
+EXAMPLES: |
+  - ansible.builtin.debug:
+      msg: "{{ item | manala.utils.default({'bar': 'bar'}, {'baz': 'baz'}) }}"
+    loop:
+      - foo: foo
+        bar: foo

@@ -1,0 +1,38 @@
+---
+
+############
+# Multiple #
+############
+
+- name: multiple | Default
+  tags: multiple
+  vars:
+    data:
+      - foo: foo
+        bar: foo
+      - foo: foo
+        baz: bar
+    defaults:
+      - bar: bar
+        baz: baz
+      - baz: baz
+        qux: qux
+    expected:
+      - foo: foo
+        bar: foo
+        baz: baz
+        qux: qux
+      - foo: foo
+        bar: bar
+        baz: bar
+        qux: qux
+  block:
+
+    - name: multiple | Converge
+      ansible.builtin.set_fact:
+        actual: "{{ data | manala.utils.default(*defaults) }}"
+
+    - name: multiple | Verify
+      ansible.builtin.assert:
+        that:
+          - actual == expected

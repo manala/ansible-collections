@@ -1,0 +1,40 @@
+---
+
+DOCUMENTATION:
+  name: unique
+  author:
+    - Manala (@manala)
+  short_description: Creates a list of unique paths from a provided paths list
+  description:
+    - Creates a list of unique paths from a provided paths list.
+  positional: _input
+  options:
+    _input:
+      description: A list of path dicts.
+      type: list
+      elements: dict
+      required: true
+    pick:
+      description: In case of duplicate paths, which one to pick.
+      type: str
+      default: last
+      choices:
+        first: pick the first one
+        last: pick the last one
+    place:
+      description: In case of duplicate paths, where to place the picked one.
+      type: str
+      default: last
+      choices:
+        first: place at the first duplicated path place
+        last: place at the last duplicated path place
+
+RETURN:
+  _value:
+    description: A list of unique path dicts.
+    type: list
+    elements: dict
+
+EXAMPLES: |
+  - manala.path.path: "{{ item }}"
+    loop: "{{ [{'path': 'foo'}, {'path': 'bar'}, {'path': 'foo'}] | manala.path.unique() }}"

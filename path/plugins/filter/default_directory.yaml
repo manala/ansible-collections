@@ -1,0 +1,33 @@
+---
+
+DOCUMENTATION:
+  name: default_directory
+  author:
+    - Manala (@manala)
+  short_description: Conditionally apply default values to a path dict if it's a directory
+  description:
+    - Returns a path dict with default values conditionally applied for missing keys if it's a directory.
+  positional: _input, _paths
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+    _paths:
+      description: A list of path dict containing default values to apply.
+      type: dict
+      required: true
+  deprecated:
+    removed_in: 2.0.0
+    why: the "default" filter is more generic
+    alternatives: Use "default" filter with state='directory' instead
+
+RETURN:
+  _value:
+    description: A path dict with default values applied for missing keys.
+    type: dict
+
+EXAMPLES: |
+  - manala.path.path: "{{ item | manala.path.default_directory({'user': 'bar', 'group': 'baz'}, {'mode': 'qux'}) }}"
+    loop:
+      - path: foo

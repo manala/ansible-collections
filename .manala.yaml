@@ -1,0 +1,41 @@
+####################################################################
+# !!! REMINDER !!!                                                 #
+# Don't forget to run `manala up` each time you update this file ! #
+####################################################################
+
+manala:
+    recipe: lazy.ansible
+
+###########
+# Project #
+###########
+
+project:
+    name: manala-ansible-collections
+
+##########
+# System #
+##########
+
+system:
+    dir: /usr/share/ansible/collections/ansible_collections/manala
+    # ansible-test needs en_US.UTF-8 locale
+    locale: en_US.UTF-8
+    env_file:
+        - .env
+        - path: .env.local
+          required: false
+    tmpfs:
+        # ansible-test needs an executable /tmp
+        - /tmp:exec
+    git:
+        config: |
+            # Silence false positive dubious ownership errors
+            [safe]
+            directory = *
+    ansible:
+        version: 2.18.9
+    ansible-lint:
+        version: 25.9.1
+    ansible-creator:
+        version: 25.9.0

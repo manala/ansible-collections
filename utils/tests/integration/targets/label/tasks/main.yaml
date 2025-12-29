@@ -1,0 +1,4 @@
+---
+
+- name: Label
+  ansible.builtin.import_tasks: label.yaml

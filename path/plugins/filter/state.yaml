@@ -1,0 +1,26 @@
+---
+
+DOCUMENTATION:
+  name: state
+  author:
+    - Manala (@manala)
+  short_description: Get the underlying state of a path dict
+  description:
+    - Returns the underlying state of path dict.
+  positional: _input
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+
+RETURN:
+  _value:
+    description: A state.
+    type: str
+
+EXAMPLES: |
+  - ansible.builtin.assert:
+      that:
+        - >
+          ({'path': 'foo'} | manala.path.state) == 'directory'

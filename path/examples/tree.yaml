@@ -1,0 +1,35 @@
+---
+
+# This playbook example contains simple use cases that illustrate the basics functionality of join filter.
+
+- name: Tree
+  gather_facts: false
+  hosts: localhost
+  vars:
+    path: /tmp
+    tree:
+      - path: foo
+      - path: foo/bar
+        content: |
+          Bar
+      - path: foo/baz
+        template: template.j2
+      - path: qux
+        state: absent
+  tasks:
+
+    - name: Tree with simple path
+      manala.path.path:
+        path: "{{ item.path }}"
+        state: "{{ item.state | default(omit) }}"
+        content: "{{ item.content | default(omit) }}"
+        template: "{{ item.template | default(omit) }}"
+      loop: "{{ tree | manala.path.join(path) }}"
+
+    - name: Tree with multiple paths
+      manala.path.path:
+        path: "{{ item.path }}"
+        state: "{{ item.state | default(omit) }}"
+        content: "{{ item.content | default(omit) }}"
+        template: "{{ item.template | default(omit) }}"
+      loop: "{{ tree | manala.path.join(path, 'service') }}"

@@ -1,0 +1,41 @@
+---
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
+DOCUMENTATION:
+  module: find
+  author:
+    - Manala (@manala)
+  short_description: Return a list of path dicts based on specific criteria
+  description:
+    - Return a list of path dicts based on specific criteria.
+  options:
+    path:
+      description: Path of directory to search.
+      type: path
+      required: true
+    patterns:
+      description: Shell patterns
+      type: list
+      elements: str
+      required: false
+    excludes:
+      description: Exclusion shell patterns.
+      type: list
+      elements: str
+      required: false
+    relative:
+      description: Make returned paths relative to base provided path.
+      type: bool
+      default: false
+
+RETURN:
+  paths:
+    description: All matches path dicts found with the specified criteria .
+    type: list
+    elements: dict
+    returned: always
+
+EXAMPLES: |
+  - name: Find
+    manala.path.find:
+      path: /foo/bar

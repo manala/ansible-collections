@@ -1,0 +1,72 @@
+---
+
+##########
+# Absent #
+##########
+
+- name: absent | Absent
+  tags: absent
+  vars:
+    root:
+      path: "{{ [playbook_dir, '..', '..', '..', 'path', 'absent'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
+    fixtures:
+      - {path: file, state: touch}
+      - {path: file_absent, state: absent}
+      - {path: directory_empty, state: directory}
+      - {path: directory, state: directory}
+      - {path: directory/file, state: touch}
+      - {path: link_file, state: link, src: file}
+      - {path: link_directory, state: link, src: directory}
+    paths:
+      - {path: file, state: absent}
+      - {path: file_absent, state: absent}
+      - {path: directory_empty, state: absent}
+      - {path: directory, state: absent}
+      - {path: link_file, state: absent}
+      - {path: link_directory, state: absent}
+    expected:
+      - {path: file, exists: false}
+      - {path: file_absent, exists: false}
+      - {path: directory_empty, exists: false}
+      - {path: directory, exists: false}
+      - {path: link_file, exists: false}
+      - {path: link_directory, exists: false}
+  block:
+
+    - name: absent | Prepare root
+      ansible.builtin.file:  # noqa: risky-file-permissions
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+      loop:
+        - {path: "{{ root.path }}", state: absent}
+        - {path: "{{ root.path }}", state: directory}
+
+    - name: absent | Prepare fixtures
+      ansible.builtin.file:  # noqa: risky-file-permissions
+        path: "{{ [root.path, item.path] | ansible.builtin.path_join }}"
+        state: "{{ item.state }}"
+        src: "{{ item.src | default(omit) }}"
+      loop: "{{ fixtures }}"
+
+    - name: absent | Converge
+      vars:
+        __path: "{{ item | manala.path.root(root) }}"
+      manala.path.path: "{{ __path }}"
+      loop: "{{ paths }}"
+      loop_control:
+        label: "{{ __path | manala.path.label }}"
+
+    - name: absent | Stats
+      ansible.builtin.stat:
+        path: "{{ [root.path, item.path] | ansible.builtin.path_join }}"
+      loop: "{{ expected }}"
+      register: stats
+
+    - name: absent | Verify
+      ansible.builtin.assert:
+        quiet: true
+        that:
+          - stats.results[index].stat.exists == expected[index].exists
+      loop: "{{ expected }}"
+      loop_control:
+        index_var: index

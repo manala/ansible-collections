@@ -1,0 +1,37 @@
+---
+
+DOCUMENTATION:
+  name: label
+  author:
+    - Manala (@manala)
+  short_description: Format a loop label for a dict
+  description:
+    - Returns a formatted label of a dict into a loop.
+  positional: _input
+  options:
+    _input:
+      description: A dict.
+      type: dict
+      required: true
+    keep:
+      description: Keep only provided keys.
+      type: list
+    remove:
+      description: Remove provided keys.
+      type: list
+    mask:
+      description: Mask only Remove provided keys.
+      type: list
+
+RETURN:
+  _value:
+    description: A formatted label of a dict into a loop.
+    type: dict
+
+EXAMPLES: |
+  -  ansible.builtin.debug:
+        var: item
+    loop:
+      - foo: foo
+    loop_control:
+      label: "{{ item | manala.utils.label }}"

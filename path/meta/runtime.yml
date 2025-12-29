@@ -1,0 +1,18 @@
+---
+
+requires_ansible: '>=2.16.0'
+
+plugin_routing:
+  filter:
+    default_file:
+      deprecation:
+        removal_version: 2.0.0
+        warning_text: Use "default" filter with state='file' instead.
+    default_link:
+      deprecation:
+        removal_version: 2.0.0
+        warning_text: Use "default" filter with state='link' instead.
+    default_directory:
+      deprecation:
+        removal_version: 2.0.0
+        warning_text: Use "default" filter with state='directory' instead.

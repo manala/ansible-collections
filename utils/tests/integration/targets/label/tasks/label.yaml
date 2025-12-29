@@ -1,0 +1,37 @@
+---
+
+#########
+# Label #
+#########
+
+- name: label | Label
+  tags: label
+  vars:
+    data:
+      foo: foo
+      bar: bar
+      baz: baz
+    expected:
+      - foo: foo
+        bar: bar
+        baz: baz
+      - foo: foo
+      - bar: bar
+        baz: baz
+      - foo: <masked>
+        bar: bar
+        baz: baz
+  block:
+
+    - name: label | Converge
+      ansible.builtin.set_fact:
+        actual:
+          - "{{ data | manala.utils.label }}"
+          - "{{ data | manala.utils.label(keep=['foo']) }}"
+          - "{{ data | manala.utils.label(remove=['foo']) }}"
+          - "{{ data | manala.utils.label(mask=['foo']) }}"
+
+    - name: label | Verify
+      ansible.builtin.assert:
+        that:
+          - actual == expected

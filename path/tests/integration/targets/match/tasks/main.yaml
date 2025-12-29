@@ -1,0 +1,29 @@
+---
+
+#########
+# Match #
+#########
+
+- name: Match
+  vars:
+    pattern: "*bar"
+    fixtures:
+      - {path: /foo}
+      - {path: /foo/bar}
+    expected:
+      - {path: /foo/bar}
+  block:
+
+    - name: Converge
+      ansible.builtin.set_fact:
+        actual: "{{ fixtures
+            | select('manala.path.match', pattern)
+          }}"
+
+    - name: Verify
+      ansible.builtin.assert:
+        quiet: true
+        that:
+          - "{'path': 'foo'} is manala.path.match('*f*')"
+          - "{'path': 'foo'} is not manala.path.match('*b*')"
+          - (actual | sort(attribute='path') | to_json) == (expected | sort(attribute='path') | to_json)

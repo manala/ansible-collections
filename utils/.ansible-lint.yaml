@@ -1,0 +1,22 @@
+---
+
+profile: production
+
+offline: true
+
+exclude_paths:
+  - .github
+  - .manala
+
+skip_list:
+  - yaml[line-length]
+
+enable_list:
+  - empty-string-compare
+  - galaxy-version-incorrect
+  - loop-var-prefix
+  - name[prefix]
+  - no-log-password
+  - no-prompting
+  - no-same-owner
+  - only-builtins

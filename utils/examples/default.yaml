@@ -1,0 +1,64 @@
+---
+
+- name: Default
+  hosts: localhost
+  gather_facts: false
+  vars:
+    data:
+      foo: foo
+      bar: foo
+    default:
+      bar: bar
+      baz: baz
+  tasks:
+
+    - name: Default
+      ansible.builtin.debug:
+        msg: "{{ data | manala.utils.default(default) }}"
+
+# TASK [Default] *******************************************************************
+# ok: [localhost] => {
+#     "msg": {
+#         "foo": "foo",
+#         "bar": "foo",
+#         "baz": "baz"
+#     }
+# }
+
+- name: Multiple
+  hosts: localhost
+  gather_facts: false
+  vars:
+    data:
+      - foo: foo
+        bar: foo
+      - foo: foo
+        baz: bar
+    defaults:
+      - bar: bar
+        baz: baz
+      - baz: baz
+        qux: qux
+  tasks:
+
+    - name: Multiple
+      ansible.builtin.debug:
+        msg: "{{ data | manala.utils.default(*defaults) }}"
+
+# TASK [Multiple] ******************************************************************
+# ok: [localhost] => {
+#     "msg": [
+#         {
+#             "foo": "foo",
+#             "bar": "foo",
+#             "baz": "baz",
+#             "qux": "qux"
+#         },
+#         {
+#             "foo": "foo",
+#             "bar": "bar",
+#             "baz": "bar",
+#             "qux": "qux"
+#         }
+#     ]
+# }

@@ -1,0 +1,30 @@
+---
+
+DOCUMENTATION:
+  name: root
+  author:
+    - Manala (@manala)
+  short_description: Root a path dict or a list of path dict to a list of base path dicts or path strings
+  description:
+    - Returns a path dict or a list of path dict obtained by joining their path to a list of base path dicts or path strings.
+  positional: _input, _paths
+  options:
+    _input:
+      description: A path dict, or a list of path dict.
+      type: raw
+      required: true
+    _root_paths:
+      description: A list of base path dicts or path strings to join to.
+      type: list
+      elements: any
+      required: true
+
+RETURN:
+  _value:
+    description: A path dict or a list of path dicts with path obtained by joining to a list of base path dicts or path strings.
+    type: raw
+
+EXAMPLES: |
+  - manala.path.path: "{{ item | manala.path.root({'path': 'bar'}, 'baz') }}"
+    loop:
+      - path: foo

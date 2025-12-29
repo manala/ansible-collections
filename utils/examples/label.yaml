@@ -1,0 +1,65 @@
+---
+
+- name: Label
+  hosts: localhost
+  gather_facts: false
+  vars:
+    data:
+      - foo: foo
+        bar: bar
+        baz: baz
+      - foo: foo
+        bar: bar
+        baz: baz
+      - foo: foo
+        bar: bar
+        baz: baz
+  tasks:
+
+    - name: Label
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ data }}"
+      loop_control:
+        label: "{{ item | manala.utils.label }}"
+
+# TASK [Label] *******************************************************************
+# ok: [localhost] => (item={'foo': 'foo', 'bar': 'bar', 'baz': 'baz'}) => ...
+# ok: [localhost] => (item={'foo': 'foo', 'bar': 'bar', 'baz': 'baz'}) => ...
+# ok: [localhost] => (item={'foo': 'foo', 'bar': 'bar', 'baz': 'baz'}) => ...
+
+    - name: Keep
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ data }}"
+      loop_control:
+        label: "{{ item | manala.utils.label(keep=['foo']) }}"
+
+# TASK [Keep] *******************************************************************
+# ok: [localhost] => (item={'foo': 'foo'}) => ...
+# ok: [localhost] => (item={'foo': 'foo'}) => ...
+# ok: [localhost] => (item={'foo': 'foo'}) => ...
+
+    - name: Remove
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ data }}"
+      loop_control:
+        label: "{{ item | manala.utils.label(remove=['foo']) }}"
+
+# TASK [Remove] *******************************************************************
+# ok: [localhost] => (item={'bar': 'bar', 'baz': 'baz'}) => ...
+# ok: [localhost] => (item={'bar': 'bar', 'baz': 'baz'}) => ...
+# ok: [localhost] => (item={'bar': 'bar', 'baz': 'baz'}) => ...
+
+    - name: Mask
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ data }}"
+      loop_control:
+        label: "{{ item | manala.utils.label(mask=['foo']) }}"
+
+# TASK [Mask] *******************************************************************
+# ok: [localhost] => (item={'foo': '<masked>', 'bar': 'bar', 'baz': 'baz'}) => ...
+# ok: [localhost] => (item={'foo': '<masked>', 'bar': 'bar', 'baz': 'baz'}) => ...
+# ok: [localhost] => (item={'foo': '<masked>', 'bar': 'bar', 'baz': 'baz'}) => ...

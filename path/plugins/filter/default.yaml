@@ -1,0 +1,32 @@
+---
+
+DOCUMENTATION:
+  name: default
+  author:
+    - Manala (@manala)
+  short_description: Apply default values to a path dict or a list of path dict
+  description:
+    - Returns a path dictor a list of path dicts with default values applied for missing keys.
+  positional: _input, _paths
+  options:
+    _input:
+      description: A path dict, or a list of path dict.
+      type: raw
+      required: true
+    _default_paths:
+      description: A list of path dict containing default values to apply.
+      type: dict
+      required: true
+    state:
+      description: Filter on path state.
+      type: str
+
+RETURN:
+  _value:
+    description: A path dict or a list of path dicts with default values applied for missing keys.
+    type: raw
+
+EXAMPLES: |
+  - manala.path.path: "{{ item | manala.path.default({'user': 'bar', 'group': 'baz'}, {'mode': 'qux'}) }}"
+    loop:
+      - path: foo
