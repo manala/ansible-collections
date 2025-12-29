@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Depends on "manala.utils" collection
+
 ### Removed
 
 - Remove deprecated "default_file", "default_link" and "default_directory" filters

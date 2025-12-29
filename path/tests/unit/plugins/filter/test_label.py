@@ -15,7 +15,7 @@ class TestLabel(unittest.TestCase):
 
     def test_file_implicit(self):
         self.assertEqual(
-            {'path': 'path', 'state': 'file', 'user': 'user', 'group': 'group', 'mode': 'mode'},
+            {'path': 'path', 'state': 'file', 'content': '<masked>', 'user': 'user', 'group': 'group', 'mode': 'mode'},
             _filter_label(
                 {'path': 'path', 'content': 'content', 'user': 'user', 'group': 'group', 'mode': 'mode'}
             )

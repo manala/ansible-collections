@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from ansible.errors import AnsibleTemplateError
 from .state import _state as _filter_state
+from ansible_collections.manala.utils.plugins.filter.label import _label as _utils_filter_label
 
 
 def _label(path):
@@ -11,39 +12,16 @@ def _label(path):
     if 'path' not in path:
         raise AnsibleTemplateError("label input expects a 'path' property")
 
-    label = {
-        'path': path['path'],
-        'state': _filter_state(path),
-    }
+    # Normalize path state
+    path['state'] = _filter_state(path)
 
-    match label['state']:
+    match path['state']:
         case 'file':
-            if path.get('content') is not None:
-                label.update({
-                    key: path[key] for key in ['user', 'group', 'mode'] if key in path
-                })
-            elif path.get('file') is not None:
-                label.update({
-                    key: path[key] for key in ['file', 'user', 'group', 'mode'] if key in path
-                })
-            elif path.get('template') is not None:
-                label.update({
-                    key: path[key] for key in ['template', 'user', 'group', 'mode'] if key in path
-                })
-            else:
-                label.update({
-                    key: path[key] for key in ['user', 'group', 'mode'] if key in path
-                })
+            return _utils_filter_label(path, keep=['path', 'state', 'file', 'template', 'user', 'group', 'mode'], mask=['content'])
         case 'link':
-            label.update({
-                key: path[key] for key in ['src', 'user', 'group'] if key in path
-            })
+            return _utils_filter_label(path, keep=['path', 'state', 'src', 'user', 'group'])
         case 'directory':
-            label.update({
-                key: path[key] for key in ['user', 'group', 'mode'] if key in path
-            })
-
-    return label
+            return _utils_filter_label(path, keep=['path', 'state', 'user', 'group', 'mode'])
 
 
 class FilterModule(object):

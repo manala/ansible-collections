@@ -6,6 +6,8 @@ on:
       - .manala.yaml
       - .github/workflows/_lint.yaml
       - .github/workflows/_test.yaml
+      # Dependencies
+      - utils/**
       - .github/workflows/path.yaml
       - path/**
   workflow_dispatch:

@@ -5,6 +5,7 @@ from .state import _state as _filter_state
 from ..test.state import _file as _test_file
 from ..test.state import _link as _test_link
 from ..test.state import _directory as _test_directory
+from ansible_collections.manala.utils.plugins.filter.default import _do_default as _utils_filter_do_default
 
 
 def _default(paths, *default_paths, state=None):
@@ -22,16 +23,7 @@ def _do_default(path, *default_paths, state=None):
     if state and _filter_state(path) != state:
         return path
 
-    result = {}
-
-    for default_path in reversed(default_paths):
-        if not isinstance(default_path, dict):
-            raise AnsibleTemplateError(f"default options expects dicts but was given a {type(default_path).__name__}")
-        result.update(default_path)
-
-    result.update(path)
-
-    return result
+    return _utils_filter_do_default(path, *default_paths)
 
 
 class FilterModule(object):
