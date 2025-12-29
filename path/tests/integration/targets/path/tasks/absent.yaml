@@ -49,12 +49,10 @@
       loop: "{{ fixtures }}"
 
     - name: absent | Converge
-      vars:
-        __path: "{{ item | manala.path.root(root) }}"
-      manala.path.path: "{{ __path }}"
-      loop: "{{ paths }}"
+      manala.path.path: "{{ item }}"
+      loop: "{{ paths | manala.path.root(root) }}"
       loop_control:
-        label: "{{ __path | manala.path.label }}"
+        label: "{{ item | manala.path.label }}"
 
     - name: absent | Stats
       ansible.builtin.stat:
