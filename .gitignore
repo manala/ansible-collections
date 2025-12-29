@@ -1,1 +1,5 @@
 .env.local
+
+# Ignore ansible-lint cache
+# See: https://github.com/ansible/ansible-lint/issues/4533
+.ansible/
