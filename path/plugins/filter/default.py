@@ -34,64 +34,10 @@ def _do_default(path, *default_paths, state=None):
     return result
 
 
-def _default_file(paths, *default_paths):
-    if isinstance(paths, list):
-        return [_do_default_file(path, *default_paths) for path in paths]
-
-    return _do_default_file(paths, *default_paths)
-
-
-def _do_default_file(path, *default_paths):
-    if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"default_file input expects a dict but was given a {type(path).__name__}")
-
-    if _test_file(path):
-        return _default(path, *default_paths)
-
-    return path
-
-
-def _default_link(paths, *default_paths):
-    if isinstance(paths, list):
-        return [_do_default_link(path, *default_paths) for path in paths]
-
-    return _do_default_link(paths, *default_paths)
-
-
-def _do_default_link(path, *default_paths):
-    if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"default_link input expects a dict but was given a {type(path).__name__}")
-
-    if _test_link(path):
-        return _default(path, *default_paths)
-
-    return path
-
-
-def _default_directory(paths, *default_paths):
-    if isinstance(paths, list):
-        return [_do_default_directory(path, *default_paths) for path in paths]
-
-    return _do_default_directory(paths, *default_paths)
-
-
-def _do_default_directory(path, *default_paths):
-    if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"default_directory input expects a dict but was given a {type(path).__name__}")
-
-    if _test_directory(path):
-        return _default(path, *default_paths)
-
-    return path
-
-
 class FilterModule(object):
     """ Manala path default jinja2 filters """
 
     def filters(self):
         return {
             'default': _default,
-            'default_file': _default_file,
-            'default_link': _default_link,
-            'default_directory': _default_directory,
         }
