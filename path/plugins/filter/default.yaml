@@ -4,17 +4,17 @@ DOCUMENTATION:
   name: default
   author:
     - Manala (@manala)
-  short_description: Apply default values to a path dict or a list of path dict
+  short_description: Apply default values to a path dict or a list of path dicts
   description:
-    - Returns a path dictor a list of path dicts with default values applied for missing keys.
-  positional: _input, _paths
+    - Returns a path dict or a list of path dicts with default values applied for missing keys.
+  positional: _input, default_paths
   options:
     _input:
-      description: A path dict, or a list of path dict.
+      description: A path dict, or a list of path dicts.
       type: raw
       required: true
     _default_paths:
-      description: A list of path dict containing default values to apply.
+      description: A list of path dicts containing default values to apply.
       type: dict
       required: true
     state:

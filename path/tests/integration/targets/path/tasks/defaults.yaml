@@ -34,15 +34,14 @@
         - {path: "{{ root.path }}", state: directory}
 
     - name: defaults | Converge
-      vars:
-        __path: "{{ item | manala.path.root(root)
-            | manala.path.default(default_file, state='file')
-            | manala.path.default(default_directory, state='directory')
-          }}"
-      manala.path.path: "{{ __path }}"
-      loop: "{{ paths }}"
+      manala.path.path: "{{ item }}"
+      loop: "{{ paths
+          | manala.path.root(root)
+          | manala.path.default(default_file, state='file')
+          | manala.path.default(default_directory, state='directory')
+        }}"
       loop_control:
-        label: "{{ __path | manala.path.label }}"
+        label: "{{ item | manala.path.label }}"
       register: converge
 
     - name: defaults | Stats

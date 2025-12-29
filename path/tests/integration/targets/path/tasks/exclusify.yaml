@@ -43,12 +43,13 @@
       register: found
 
     - name: exclusify | Converge
-      vars:
-        __path: "{{ item | manala.path.root(root) }}"
-      manala.path.path: "{{ __path }}"
-      loop: "{{ paths | manala.path.exclusify(found.paths) }}"
+      manala.path.path: "{{ item }}"
+      loop: "{{ paths
+          | manala.path.exclusify(found.paths)
+          | manala.path.root(root)
+        }}"
       loop_control:
-        label: "{{ __path | manala.path.label }}"
+        label: "{{ item | manala.path.label }}"
 
     - name: exclusify | Stats
       ansible.builtin.stat:
