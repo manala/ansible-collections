@@ -1,0 +1,55 @@
+on:
+  workflow_call:
+    inputs:
+      debug:
+        type: boolean
+        required: false
+        default: false
+      collection:
+        type: string
+        required: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-24.04
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up system
+        uses: ./.manala/github/system/setup
+
+      - name: Test - Sanity
+        uses: ./.manala/github/system/run
+        with:
+          run: |
+            cd ${{ inputs.collection }}
+            make test.sanity VERBOSE=1
+
+      - name: Test - Units
+        uses: ./.manala/github/system/run
+        with:
+          run: |
+            cd ${{ inputs.collection }}
+            make test.units VERBOSE=1
+
+      - name: Test - Integration
+        uses: ./.manala/github/system/run
+        with:
+          run: |
+            cd ${{ inputs.collection }}
+            make test.integration VERBOSE=1
+
+      - name: Test - Doc
+        uses: ./.manala/github/system/run
+        with:
+          run: |
+            cd ${{ inputs.collection }}
+            make test.doc VERBOSE=1
+
+      - name: Debug
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ inputs.debug && always() }}
+        timeout-minutes: 15

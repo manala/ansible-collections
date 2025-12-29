@@ -1,0 +1,31 @@
+name: Path
+
+on:
+  pull_request:
+    paths:
+      - .manala.yaml
+      - .github/workflows/_lint.yaml
+      - .github/workflows/_test.yaml
+      - .github/workflows/path.yaml
+      - path/**
+  workflow_dispatch:
+    inputs:
+      debug:
+        type: boolean
+        description: Run with tmate debugging
+        required: false
+        default: false
+
+jobs:
+  path_lint:
+    name: Lint
+    uses: ./.github/workflows/_lint.yaml
+    with:
+      debug: ${{ inputs.debug == true }}
+      collection: path
+  path_test:
+    name: Test
+    uses: ./.github/workflows/_test.yaml
+    with:
+      debug: ${{ inputs.debug == true }}
+      collection: path
