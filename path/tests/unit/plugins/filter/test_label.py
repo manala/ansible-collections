@@ -57,3 +57,11 @@ class TestLabel(unittest.TestCase):
                 {'path': 'path', 'user': 'user', 'group': 'group', 'mode': 'mode'}
             )
         )
+
+    def test_absent(self):
+        self.assertEqual(
+            {'path': 'path', 'state': 'absent'},
+            _filter_label(
+                {'path': 'path', 'state': 'absent', 'user': 'user', 'group': 'group', 'mode': 'mode'}
+            )
+        )
