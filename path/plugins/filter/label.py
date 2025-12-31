@@ -17,7 +17,7 @@ def _label(path):
 
     match path['state']:
         case 'file':
-            return _utils_filter_label(path, keep=['path', 'state', 'file', 'template', 'user', 'group', 'mode'], mask=['content'])
+            return _utils_filter_label(path, keep=['path', 'state', 'content', 'file', 'template', 'user', 'group', 'mode'], mask=['content'])
         case 'link':
             return _utils_filter_label(path, keep=['path', 'state', 'src', 'user', 'group'])
         case 'directory':
