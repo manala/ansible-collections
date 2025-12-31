@@ -22,6 +22,8 @@ def _label(path):
             return _utils_filter_label(path, keep=['path', 'state', 'src', 'user', 'group'])
         case 'directory':
             return _utils_filter_label(path, keep=['path', 'state', 'user', 'group', 'mode'])
+        case 'absent':
+            return _utils_filter_label(path, keep=['path', 'state'])
 
 
 class FilterModule(object):
