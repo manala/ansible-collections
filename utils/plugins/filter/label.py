@@ -8,9 +8,9 @@ def _label(data, keep=None, remove=None, mask=None):
         raise AnsibleTemplateError(f'label input expects a dict but was given a {type(data).__name__}')
 
     # Keep
-    keep = set(keep or [])
+    keep = keep or []
     if keep:
-        label = {key: value for key, value in data.items() if key in keep}
+        label = {key: data[key] for key in keep if key in data}
     else:
         label = data
 

@@ -22,6 +22,15 @@ class TestLabel(unittest.TestCase):
             )
         )
 
+    def test_keep_order(self):
+        self.assertEqual(
+            list({'bar': 'bar', 'qux': 'qux', 'foo': 'foo'}.items()),
+            list(_filter_label(
+                {'foo': 'foo', 'bar': 'bar', 'baz': 'baz', 'qux': 'qux'},
+                keep=['bar', 'qux', 'foo'],
+            ).items())
+        )
+
     def test_keep(self):
         self.assertEqual(
             {'foo': 'foo'},
