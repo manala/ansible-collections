@@ -12,25 +12,21 @@ class TestDefault(unittest.TestCase):
         data = NotImplemented
         defaults = {}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default input expects a dict but was given a {type(data).__name__}'):
             _filter_default(data, defaults)
-        self.assertEqual(f'default input expects a dict but was given a {type(data).__name__}', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default input expects a dict but was given a {type(data).__name__}'):
             _filter_default([data], defaults)
-        self.assertEqual(f'default input expects a dict but was given a {type(data).__name__}', str(error.exception))
 
     def test_invalid_defaults(self):
         data = {'foo': 'bar'}
         defaults = NotImplemented
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default options expects dicts but was given a {type(defaults).__name__}'):
             _filter_default(data, defaults)
-        self.assertEqual(f'default options expects dicts but was given a {type(defaults).__name__}', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default options expects dicts but was given a {type(defaults).__name__}'):
             _filter_default([data], defaults)
-        self.assertEqual(f'default options expects dicts but was given a {type(defaults).__name__}', str(error.exception))
 
     def test(self):
         defaults = {'bar': 'bar', 'baz': 'baz'}

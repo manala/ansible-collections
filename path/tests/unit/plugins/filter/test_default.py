@@ -12,25 +12,21 @@ class TestDefault(unittest.TestCase):
         paths = NotImplemented
         default_paths = {}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default input expects a dict but was given a {type(paths).__name__}'):
             _filter_default(paths, {})
-        self.assertEqual('default input expects a dict but was given a NotImplementedType', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default input expects a dict but was given a {type(paths).__name__}'):
             _filter_default([paths], {})
-        self.assertEqual('default input expects a dict but was given a NotImplementedType', str(error.exception))
 
     def test_invalid_default_paths(self):
         paths = {'path': 'path'}
         default_paths = NotImplemented
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default options expects dicts but was given a {type(default_paths).__name__}'):
             _filter_default(paths, default_paths)
-        self.assertEqual('default options expects dicts but was given a NotImplementedType', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'default options expects dicts but was given a {type(default_paths).__name__}'):
             _filter_default([paths], default_paths)
-        self.assertEqual('default options expects dicts but was given a NotImplementedType', str(error.exception))
 
     def test_file(self):
         default_paths = {'user': 'bar', 'group': 'group'}

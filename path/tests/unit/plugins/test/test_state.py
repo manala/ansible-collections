@@ -13,17 +13,14 @@ class TestFile(unittest.TestCase):
     def test_invalid_input(self):
         path = NotImplemented
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'file expects a dict but was given a {type(path).__name__}'):
             _test_file(path)
-        self.assertEqual('file expects a dict but was given a NotImplementedType', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'link expects a dict but was given a {type(path).__name__}'):
             _test_link(path)
-        self.assertEqual('link expects a dict but was given a NotImplementedType', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'directory expects a dict but was given a {type(path).__name__}'):
             _test_directory(path)
-        self.assertEqual('directory expects a dict but was given a NotImplementedType', str(error.exception))
 
     def test_empty(self):
         path = {}

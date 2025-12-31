@@ -11,9 +11,8 @@ class TestLabel(unittest.TestCase):
     def test_invalid_input(self):
         data = NotImplemented
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'label input expects a dict but was given a {type(data).__name__}'):
             _filter_label(data)
-        self.assertEqual(f'label input expects a dict but was given a {type(data).__name__}', str(error.exception))
 
     def test(self):
         self.assertEqual(
