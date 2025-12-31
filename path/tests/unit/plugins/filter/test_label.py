@@ -14,6 +14,14 @@ class TestLabel(unittest.TestCase):
         with self.assertRaisesRegex(AnsibleTemplateError, f'label input expects a dict but was given a {type(path).__name__}'):
             _filter_label(path)
 
+    def test_order(self):
+        self.assertEqual(
+            list({'path': 'path', 'state': 'file', 'content': '<masked>', 'user': 'user', 'group': 'group', 'mode': 'mode'}.items()),
+            list(_filter_label(
+                {'user': 'user', 'path': 'path', 'mode': 'mode', 'content': 'content', 'group': 'group'}
+            ).items())
+        )
+
     def test_file_implicit(self):
         self.assertEqual(
             {'path': 'path', 'state': 'file', 'content': '<masked>', 'user': 'user', 'group': 'group', 'mode': 'mode'},
