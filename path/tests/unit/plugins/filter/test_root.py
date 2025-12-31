@@ -12,91 +12,75 @@ class TestRoot(unittest.TestCase):
         paths = NotImplemented
         root_paths = {}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'root input expects a dict but was given a {type(paths).__name__}'):
             _filter_root(paths, root_paths)
-        self.assertEqual('root input expects a dict but was given a NotImplementedType', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'root input expects a dict but was given a {type(paths).__name__}'):
             _filter_root([paths], root_paths)
-        self.assertEqual('root input expects a dict but was given a NotImplementedType', str(error.exception))
 
     def test_invalid_root_paths(self):
         paths = {}
         root_paths = NotImplemented
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'root options expects a dict or a string but was given a {type(root_paths).__name__}'):
             _filter_root(paths, root_paths)
-        self.assertEqual('root options expects a dict or a string but was given a NotImplementedType', str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f'root options expects a dict or a string but was given a {type(root_paths).__name__}'):
             _filter_root([paths], root_paths)
-        self.assertEqual('root options expects a dict or a string but was given a NotImplementedType', str(error.exception))
 
     def test_rooted_same_as_root(self):
         root_paths = '/foo'
 
         paths = {'path': '.'}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path '/foo/.' is the same as the root path '{root_paths}'"):
             _filter_root(paths, root_paths)
-        self.assertEqual("path '/foo/.' is the same as the root path '/foo'", str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path '/foo/.' is the same as the root path '{root_paths}'"):
             _filter_root([paths], root_paths)
-        self.assertEqual("path '/foo/.' is the same as the root path '/foo'", str(error.exception))
 
         paths = {'path': '../foo'}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path '/foo/../foo' is the same as the root path '{root_paths}'"):
             _filter_root(paths, root_paths)
-        self.assertEqual("path '/foo/../foo' is the same as the root path '/foo'", str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path '/foo/../foo' is the same as the root path '{root_paths}'"):
             _filter_root([paths], root_paths)
-        self.assertEqual("path '/foo/../foo' is the same as the root path '/foo'", str(error.exception))
 
         paths = {'path': 'bar/..'}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path '/foo/bar/..' is the same as the root path '{root_paths}'"):
             _filter_root(paths, root_paths)
-        self.assertEqual("path '/foo/bar/..' is the same as the root path '/foo'", str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path '/foo/bar/..' is the same as the root path '{root_paths}'"):
             _filter_root([paths], root_paths)
-        self.assertEqual("path '/foo/bar/..' is the same as the root path '/foo'", str(error.exception))
 
     def test_traversal(self):
         root_paths = '/foo'
 
         paths = {'path': '/bar'}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path traversal between '/bar' and root '{root_paths}'"):
             _filter_root(paths, root_paths)
-        self.assertEqual("path traversal between '/bar' and root '/foo'", str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path traversal between '/bar' and root '{root_paths}'"):
             _filter_root([paths], root_paths)
-        self.assertEqual("path traversal between '/bar' and root '/foo'", str(error.exception))
 
         paths = {'path': '../bar'}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path traversal between '/foo/../bar' and root '{root_paths}'"):
             _filter_root(paths, root_paths)
-        self.assertEqual("path traversal between '/foo/../bar' and root '/foo'", str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path traversal between '/foo/../bar' and root '{root_paths}'"):
             _filter_root([paths], root_paths)
-        self.assertEqual("path traversal between '/foo/../bar' and root '/foo'", str(error.exception))
 
         paths = {'path': 'bar/../../baz'}
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path traversal between '/foo/bar/../../baz' and root '{root_paths}'"):
             _filter_root(paths, root_paths)
-        self.assertEqual("path traversal between '/foo/bar/../../baz' and root '/foo'", str(error.exception))
 
-        with self.assertRaises(AnsibleTemplateError) as error:
+        with self.assertRaisesRegex(AnsibleTemplateError, f"path traversal between '/foo/bar/../../baz' and root '{root_paths}'"):
             _filter_root([paths], root_paths)
-        self.assertEqual("path traversal between '/foo/bar/../../baz' and root '/foo'", str(error.exception))
 
     def test_single_dict(self):
         self.assertEqual({

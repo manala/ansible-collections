@@ -9,9 +9,10 @@ from ansible.errors import AnsibleTemplateError
 class TestLabel(unittest.TestCase):
 
     def test_invalid_inputs(self):
-        with self.assertRaises(AnsibleTemplateError) as error:
-            _filter_state(NotImplemented)
-        self.assertEqual('state input expects a dict but was given a NotImplementedType', str(error.exception))
+        path = NotImplemented
+
+        with self.assertRaisesRegex(AnsibleTemplateError, f'state input expects a dict but was given a {type(path).__name__}'):
+            _filter_state(path)
 
     def test_empty(self):
         self.assertEqual(
