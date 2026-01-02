@@ -25,6 +25,20 @@ def _directory(path):
     return _filter_state(path) == 'directory'
 
 
+def _present(path):
+    if not isinstance(path, dict):
+        raise AnsibleTemplateError(f'present expects a dict but was given a {type(path).__name__}')
+
+    return _filter_state(path) != 'absent'
+
+
+def _absent(path):
+    if not isinstance(path, dict):
+        raise AnsibleTemplateError(f'absent expects a dict but was given a {type(path).__name__}')
+
+    return _filter_state(path) == 'absent'
+
+
 class TestModule(object):
     """ Manala path state jinja2 tests """
 
@@ -33,4 +47,6 @@ class TestModule(object):
             'file': _file,
             'link': _link,
             'directory': _directory,
+            'present': _present,
+            'absent': _absent,
         }
