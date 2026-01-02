@@ -152,19 +152,15 @@ class ActionModule(ActionBase):
         )
 
     def run_file(self, args, task_vars):
-        display.v(f"Use 'ansible.builtin.stat' to get '{args['path']}' stat.")
-        file_stat = self._execute_module(
-            module_name='ansible.builtin.stat',
-            module_args={
-                'path': args['path'],
-            },
-            task_vars=task_vars,
+        remote_stat = self._execute_remote_stat(
+            args['path'],
+            all_vars=task_vars,
+            follow=False,
+            checksum=False,
         )
-        if file_stat.get('failed', False):
-            return file_stat
 
         file_state = 'touch'
-        if file_stat['stat'].get('exists', False):
+        if remote_stat['exists']:
             file_state = 'file'
 
         display.v(f"Use 'ansible.builtin.file' to ensure '{args['path']}' state.")
