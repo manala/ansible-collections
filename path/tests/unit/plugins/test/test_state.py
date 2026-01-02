@@ -4,6 +4,8 @@ import unittest
 from plugins.test.state import _file as _test_file
 from plugins.test.state import _link as _test_link
 from plugins.test.state import _directory as _test_directory
+from plugins.test.state import _present as _test_present
+from plugins.test.state import _absent as _test_absent
 
 from ansible.errors import AnsibleTemplateError
 
@@ -28,6 +30,8 @@ class TestFile(unittest.TestCase):
         self.assertFalse(_test_file(path))
         self.assertFalse(_test_link(path))
         self.assertTrue(_test_directory(path))
+        self.assertTrue(_test_present(path))
+        self.assertFalse(_test_absent(path))
 
     def test_explicit(self):
         path_absent = {'path': 'path', 'state': 'absent'}
@@ -49,6 +53,16 @@ class TestFile(unittest.TestCase):
         self.assertFalse(_test_directory(path_file))
         self.assertFalse(_test_directory(path_link))
         self.assertTrue(_test_directory(path_directory))
+
+        self.assertFalse(_test_present(path_absent))
+        self.assertTrue(_test_present(path_file))
+        self.assertTrue(_test_present(path_link))
+        self.assertTrue(_test_present(path_directory))
+
+        self.assertTrue(_test_absent(path_absent))
+        self.assertFalse(_test_absent(path_file))
+        self.assertFalse(_test_absent(path_link))
+        self.assertFalse(_test_absent(path_directory))
 
     def test_implicit_file(self):
         path_content = {'path': 'path', 'content': 'content'}
@@ -79,6 +93,20 @@ class TestFile(unittest.TestCase):
         self.assertFalse(_test_directory(path_template))
         self.assertTrue(_test_directory(path_template_none))
 
+        self.assertTrue(_test_present(path_content))
+        self.assertTrue(_test_present(path_content_none))
+        self.assertTrue(_test_present(path_file))
+        self.assertTrue(_test_present(path_file_none))
+        self.assertTrue(_test_present(path_template))
+        self.assertTrue(_test_present(path_template_none))
+
+        self.assertFalse(_test_absent(path_content))
+        self.assertFalse(_test_absent(path_content_none))
+        self.assertFalse(_test_absent(path_file))
+        self.assertFalse(_test_absent(path_file_none))
+        self.assertFalse(_test_absent(path_template))
+        self.assertFalse(_test_absent(path_template_none))
+
     def test_implicit_link(self):
         path_src = {'path': 'path', 'src': 'src'}
         path_src_none = {'path': 'path', 'src': None}
@@ -92,6 +120,12 @@ class TestFile(unittest.TestCase):
         self.assertFalse(_test_directory(path_src))
         self.assertTrue(_test_directory(path_src_none))
 
+        self.assertTrue(_test_present(path_src))
+        self.assertTrue(_test_present(path_src_none))
+
+        self.assertFalse(_test_absent(path_src))
+        self.assertFalse(_test_absent(path_src_none))
+
     def test_implicit_directory(self):
         path = {'path': 'path'}
 
@@ -100,3 +134,7 @@ class TestFile(unittest.TestCase):
         self.assertFalse(_test_link(path))
 
         self.assertTrue(_test_directory(path))
+
+        self.assertTrue(_test_present(path))
+
+        self.assertFalse(_test_absent(path))

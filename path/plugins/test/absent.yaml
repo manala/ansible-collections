@@ -1,0 +1,20 @@
+---
+
+DOCUMENTATION:
+  name: absent
+  author:
+    - Manala (@manala)
+  short_description: Test if path dict is in an absent state
+  description:
+    - Test if path dict is in an absent state.
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+
+EXAMPLES: |
+  - ansible.builtin.assert:
+      that:
+        - >
+          {'path': 'foo'} is manala.path.absent
