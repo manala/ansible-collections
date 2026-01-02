@@ -6,7 +6,7 @@ import fnmatch
 
 def _match(path, pattern):
     if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"match expects a dict but was given a {type(path).__name__}")
+        raise AnsibleTemplateError(f'match expects a dict but was given a {type(path).__name__}')
 
     if pattern is None:
         return True

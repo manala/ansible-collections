@@ -5,7 +5,7 @@ from ansible.errors import AnsibleTemplateError
 
 def _state(path):
     if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"state input expects a dict but was given a {type(path).__name__}")
+        raise AnsibleTemplateError(f'state input expects a dict but was given a {type(path).__name__}')
 
     state = path.get('state', 'present')
 

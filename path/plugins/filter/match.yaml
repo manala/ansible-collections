@@ -7,14 +7,14 @@ DOCUMENTATION:
   short_description: Filter a list of path dicts matching a pattern
   description:
     - Filter a list of path dicts matching a pattern.
-  positional: _input
+  positional: _input, _pattern
   options:
     _input:
       description: A list of path dicts.
       type: list
       elements: dict
       required: true
-    pattern:
+    _pattern:
       description: A pattern.
       type: str
       required: true
