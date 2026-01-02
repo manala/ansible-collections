@@ -1,0 +1,26 @@
+---
+
+DOCUMENTATION:
+  name: parse
+  author:
+    - Manala (@manala)
+  short_description: Get the components of a path dict
+  description:
+    - Returns the components of a path dict.
+  positional: _input
+  options:
+    _input:
+      description: A path dict.
+      type: dict
+      required: true
+
+RETURN:
+  _value:
+    description: Components.
+    type: dict
+
+EXAMPLES: |
+  - ansible.builtin.debug:
+      msg:
+        - >
+          {'path': 'foo'} | manala.path.parse
