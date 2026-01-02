@@ -1,0 +1,29 @@
+---
+
+DOCUMENTATION:
+  name: extension
+  author:
+    - Manala (@manala)
+  short_description: Suffix a path dict or a list of path dict with a file extension
+  description:
+    - Returns a path dict or a list of path dict suffixed with a file extension.
+  positional: _input, _extension
+  options:
+    _input:
+      description: A path dict, or a list of path dict.
+      type: raw
+      required: true
+    _extension:
+      description: A file extension.
+      type: str
+      required: true
+
+RETURN:
+  _value:
+    description: A path dict or a list of path dicts with path suffixed with a file extension.
+    type: raw
+
+EXAMPLES: |
+  - manala.path.path: "{{ item | manala.path.extension('bar') }}"
+    loop:
+      - path: foo
