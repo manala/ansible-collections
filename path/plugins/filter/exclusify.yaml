@@ -7,14 +7,14 @@ DOCUMENTATION:
   short_description: Ensure exclusivity against a list of path dicts, by marking the extras as absent
   description:
     - Ensure exclusivity against a list of path dicts, by marking the extras as absent.
-  positional: _input, againsts
+  positional: _input, _against_paths
   options:
     _input:
       description: A list of path dicts.
       type: list
       elements: dict
       required: true
-    againsts:
+    _against_paths:
       description: A list of path dicts.
       type: list
       elements: dict

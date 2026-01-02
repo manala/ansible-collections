@@ -7,7 +7,7 @@ from ansible_collections.manala.utils.plugins.filter.label import _label as _uti
 
 def _label(path):
     if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"label input expects a dict but was given a {type(path).__name__}")
+        raise AnsibleTemplateError(f'label input expects a dict but was given a {type(path).__name__}')
 
     if 'path' not in path:
         raise AnsibleTemplateError("label input expects a 'path' property")

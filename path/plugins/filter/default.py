@@ -17,7 +17,7 @@ def _default(paths, *default_paths, state=None):
 
 def _do_default(path, *default_paths, state=None):
     if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"default input expects a dict but was given a {type(path).__name__}")
+        raise AnsibleTemplateError(f'default input expects a dict but was given a {type(path).__name__}')
 
     # Filter on state
     if state and _filter_state(path) != state:

@@ -7,7 +7,7 @@ DOCUMENTATION:
   short_description: Root a path dict or a list of path dict to a list of base path dicts or path strings
   description:
     - Returns a path dict or a list of path dict obtained by joining their path to a list of base path dicts or path strings.
-  positional: _input, _paths
+  positional: _input, _root_paths
   options:
     _input:
       description: A path dict, or a list of path dict.

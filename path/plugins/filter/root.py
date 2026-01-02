@@ -13,7 +13,7 @@ def _root(paths, *root_paths):
 
 def _do_root(path, *root_paths):
     if not isinstance(path, dict):
-        raise AnsibleTemplateError(f"root input expects a dict but was given a {type(path).__name__}")
+        raise AnsibleTemplateError(f'root input expects a dict but was given a {type(path).__name__}')
 
     paths = []
 
@@ -24,7 +24,7 @@ def _do_root(path, *root_paths):
             case dict():
                 paths.append(root_path['path'])
             case _:
-                raise AnsibleTemplateError(f"root options expects a dict or a string but was given a {type(root_path).__name__}")
+                raise AnsibleTemplateError(f'root options expects a dict or a string but was given a {type(root_path).__name__}')
 
     root_path = os.path.join(*paths)
     root_norm_path = os.path.normpath(root_path)
