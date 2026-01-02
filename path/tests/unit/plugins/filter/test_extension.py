@@ -30,24 +30,54 @@ class TestExtension(unittest.TestCase):
 
     def test(self):
         self.assertEqual({
-            'path': 'path.foo',
+            'path': 'foo.foo',
         }, _filter_extension(
-            {'path': 'path'},
+            {'path': 'foo'},
+            'foo',
+        ))
+
+        self.assertEqual([
+            {'path': 'foo.foo'},
+            {'path': 'foo/bar.foo'},
+        ], _filter_extension([
+            {'path': 'foo'},
+            {'path': 'foo/bar'},
+        ],
             'foo',
         ))
 
     def test_dotted_extension(self):
         self.assertEqual({
-            'path': 'path.foo',
+            'path': 'foo.foo',
         }, _filter_extension(
-            {'path': 'path'},
+            {'path': 'foo'},
+            '.foo',
+        ))
+
+        self.assertEqual([
+            {'path': 'foo.foo'},
+            {'path': 'foo/bar.foo'},
+        ], _filter_extension([
+            {'path': 'foo'},
+            {'path': 'foo/bar'},
+        ],
             '.foo',
         ))
 
     def test_path_already_extensioned(self):
         self.assertEqual({
-            'path': 'path.foo',
+            'path': 'foo.foo',
         }, _filter_extension(
-            {'path': 'path.foo'},
+            {'path': 'foo.foo'},
+            'foo',
+        ))
+
+        self.assertEqual([
+            {'path': 'foo.foo'},
+            {'path': 'foo/bar.foo'},
+        ], _filter_extension([
+            {'path': 'foo.foo'},
+            {'path': 'foo/bar.foo'},
+        ],
             'foo',
         ))

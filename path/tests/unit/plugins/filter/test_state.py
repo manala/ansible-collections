@@ -6,7 +6,7 @@ from plugins.filter.state import _state as _filter_state
 from ansible.errors import AnsibleTemplateError
 
 
-class TestLabel(unittest.TestCase):
+class TestState(unittest.TestCase):
 
     def test_invalid_inputs(self):
         path = NotImplemented
