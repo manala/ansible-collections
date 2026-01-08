@@ -48,20 +48,20 @@ make sh
 Launch sanity tests over a specific file or not
 ```shell
 ansible-test sanity --python 3.13
-ansible-test sanity --python 3.13 plugins/action/path.py
+ansible-test sanity --python 3.13 plugins/action/foo.py
 ```
 
 Launch units tests over a specific file or not
 ```shell
-ansible-test units --python 3.13 --venv
-ansible-test units --python 3.13 --venv tests/unit/plugins/filter/test_join.py
+ansible-test units --venv --python 3.13
+ansible-test units --venv --python 3.13 tests/unit/plugins/filter/test_foo.py
 ```
 
 Launch integration tests over a specific target or not
 ```shell
 ansible-test integration
-ansible-test integration find
-ansible-test integration path --tags file
+ansible-test integration foo
+ansible-test integration foo --tags bar
 ```
 
 ## Licensing

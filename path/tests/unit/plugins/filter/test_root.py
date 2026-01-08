@@ -89,6 +89,7 @@ class TestRoot(unittest.TestCase):
             {'path': 'bar'},
             {'path': '/foo'},
         ))
+
         self.assertEqual([
             {'path': '/foo/bar'},
             {'path': '/foo/baz'},
@@ -101,13 +102,14 @@ class TestRoot(unittest.TestCase):
             {'path': '/foo'},
         ))
 
-    def test_option_single_string(self):
+    def test_single_string(self):
         self.assertEqual({
             'path': '/foo/bar',
         }, _filter_root(
             {'path': 'bar'},
             '/foo',
         ))
+
         self.assertEqual([
             {'path': '/foo/bar'},
             {'path': '/foo/baz'},
@@ -120,13 +122,14 @@ class TestRoot(unittest.TestCase):
             '/foo',
         ))
 
-    def test_options_multiple_mixed(self):
+    def test_multiple_mixed(self):
         self.assertEqual({
             'path': '/foo/bar/baz',
         }, _filter_root(
             {'path': 'baz'},
             {'path': '/foo'}, 'bar',
         ))
+
         self.assertEqual([
             {'path': '/foo/bar/baz'},
             {'path': '/foo/bar/qux'},
