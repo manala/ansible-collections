@@ -11,13 +11,13 @@
       path: "{{ [playbook_dir, '..', '..', '..', 'path', 'directory'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
     fixtures: []
     paths:
-      - {path: implicit}
-      - {path: implicit_present, state: present}
-      - {path: explicit, state: directory}
+      - { path: implicit }
+      - { path: implicit_present, state: present }
+      - { path: explicit, state: directory }
     expected:
-      - {path: implicit, exists: true, isdir: true}
-      - {path: implicit_present, exists: true, isdir: true}
-      - {path: explicit, exists: true, isdir: true}
+      - { path: implicit, exists: true, isdir: true }
+      - { path: implicit_present, exists: true, isdir: true }
+      - { path: explicit, exists: true, isdir: true }
   block:
 
     - name: directory | Prepare root
@@ -25,8 +25,8 @@
         path: "{{ item.path }}"
         state: "{{ item.state }}"
       loop:
-        - {path: "{{ root.path }}", state: absent}
-        - {path: "{{ root.path }}", state: directory}
+        - { path: "{{ root.path }}", state: absent }
+        - { path: "{{ root.path }}", state: directory }
 
     - name: directory | Prepare fixtures
       ansible.builtin.file:  # noqa: risky-file-permissions

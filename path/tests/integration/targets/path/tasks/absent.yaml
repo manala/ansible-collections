@@ -10,27 +10,27 @@
     root:
       path: "{{ [playbook_dir, '..', '..', '..', 'path', 'absent'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
     fixtures:
-      - {path: file, state: touch}
-      - {path: file_absent, state: absent}
-      - {path: directory_empty, state: directory}
-      - {path: directory, state: directory}
-      - {path: directory/file, state: touch}
-      - {path: link_file, state: link, src: file}
-      - {path: link_directory, state: link, src: directory}
+      - { path: file, state: touch }
+      - { path: file_absent, state: absent }
+      - { path: directory_empty, state: directory }
+      - { path: directory, state: directory }
+      - { path: directory/file, state: touch }
+      - { path: link_file, state: link, src: file }
+      - { path: link_directory, state: link, src: directory }
     paths:
-      - {path: file, state: absent}
-      - {path: file_absent, state: absent}
-      - {path: directory_empty, state: absent}
-      - {path: directory, state: absent}
-      - {path: link_file, state: absent}
-      - {path: link_directory, state: absent}
+      - { path: file, state: absent }
+      - { path: file_absent, state: absent }
+      - { path: directory_empty, state: absent }
+      - { path: directory, state: absent }
+      - { path: link_file, state: absent }
+      - { path: link_directory, state: absent }
     expected:
-      - {path: file, exists: false}
-      - {path: file_absent, exists: false}
-      - {path: directory_empty, exists: false}
-      - {path: directory, exists: false}
-      - {path: link_file, exists: false}
-      - {path: link_directory, exists: false}
+      - { path: file, exists: false }
+      - { path: file_absent, exists: false }
+      - { path: directory_empty, exists: false }
+      - { path: directory, exists: false }
+      - { path: link_file, exists: false }
+      - { path: link_directory, exists: false }
   block:
 
     - name: absent | Prepare root
@@ -38,8 +38,8 @@
         path: "{{ item.path }}"
         state: "{{ item.state }}"
       loop:
-        - {path: "{{ root.path }}", state: absent}
-        - {path: "{{ root.path }}", state: directory}
+        - { path: "{{ root.path }}", state: absent }
+        - { path: "{{ root.path }}", state: directory }
 
     - name: absent | Prepare fixtures
       ansible.builtin.file:  # noqa: risky-file-permissions

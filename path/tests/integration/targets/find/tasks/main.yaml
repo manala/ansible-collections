@@ -9,29 +9,29 @@
     root:
       path: "{{ [playbook_dir, '..', '..', '..', 'find'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
     fixtures:
-      - {path: .hidden, state: touch, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
-      - {path: file_0644, state: touch, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644"}
-      - {path: file_0664, state: touch, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0664"}
-      - {path: directory_0755, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0755"}
-      - {path: directory_0775, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0775"}
-      - {path: link_file_0644, state: link, src: file_0644, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
-      - {path: link_directory_0755, state: link, src: directory_0755, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
+      - { path: .hidden, state: touch, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
+      - { path: file_0644, state: touch, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644" }
+      - { path: file_0664, state: touch, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0664" }
+      - { path: directory_0755, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0755" }
+      - { path: directory_0775, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0775" }
+      - { path: link_file_0644, state: link, src: file_0644, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
+      - { path: link_directory_0755, state: link, src: directory_0755, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
     expected:
-      - {path: "{{ [root.path, '.hidden'] | ansible.builtin.path_join }}", state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644"}
-      - {path: "{{ [root.path, 'file_0644'] | ansible.builtin.path_join }}", state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644"}
-      - {path: "{{ [root.path, 'file_0664'] | ansible.builtin.path_join }}", state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0664"}
-      - {path: "{{ [root.path, 'directory_0755'] | ansible.builtin.path_join }}", state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0755"}
-      - {path: "{{ [root.path, 'directory_0775'] | ansible.builtin.path_join }}", state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0775"}
-      - {path: "{{ [root.path, 'link_file_0644'] | ansible.builtin.path_join }}", state: link, src: file_0644, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
-      - {path: "{{ [root.path, 'link_directory_0755'] | ansible.builtin.path_join }}", state: link, src: directory_0755, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
+      - { path: "{{ [root.path, '.hidden'] | ansible.builtin.path_join }}", state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644" }
+      - { path: "{{ [root.path, 'file_0644'] | ansible.builtin.path_join }}", state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644" }
+      - { path: "{{ [root.path, 'file_0664'] | ansible.builtin.path_join }}", state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0664" }
+      - { path: "{{ [root.path, 'directory_0755'] | ansible.builtin.path_join }}", state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0755" }
+      - { path: "{{ [root.path, 'directory_0775'] | ansible.builtin.path_join }}", state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0775" }
+      - { path: "{{ [root.path, 'link_file_0644'] | ansible.builtin.path_join }}", state: link, src: file_0644, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
+      - { path: "{{ [root.path, 'link_directory_0755'] | ansible.builtin.path_join }}", state: link, src: directory_0755, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
     expected_relative:
-      - {path: .hidden, state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644"}
-      - {path: file_0644, state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644"}
-      - {path: file_0664, state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0664"}
-      - {path: directory_0755, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0755"}
-      - {path: directory_0775, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0775"}
-      - {path: link_file_0644, state: link, src: file_0644, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
-      - {path: link_directory_0755, state: link, src: directory_0755, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}"}
+      - { path: .hidden, state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644" }
+      - { path: file_0644, state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0644" }
+      - { path: file_0664, state: file, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0664" }
+      - { path: directory_0755, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0755" }
+      - { path: directory_0775, state: directory, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}", mode: "0775" }
+      - { path: link_file_0644, state: link, src: file_0644, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
+      - { path: link_directory_0755, state: link, src: directory_0755, user: "{{ ansible_facts.user_id }}", group: "{{ ansible_facts.user_gecos }}" }
   block:
 
     - name: Prepare root
@@ -39,8 +39,8 @@
         path: "{{ item.path }}"
         state: "{{ item.state }}"
       loop:
-        - {path: "{{ root.path }}", state: absent}
-        - {path: "{{ root.path }}", state: directory}
+        - { path: "{{ root.path }}", state: absent }
+        - { path: "{{ root.path }}", state: directory }
 
     - name: Prepare fixtures
       ansible.builtin.file:  # noqa: risky-file-permissions
