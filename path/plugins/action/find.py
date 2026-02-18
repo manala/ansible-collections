@@ -8,7 +8,7 @@ display = Display()
 
 
 class ActionModule(ActionBase):
-    '''Return a list of paths based on specific criteria'''
+    """Return a list of paths based on specific criteria"""
 
     def run(self, tmp=None, task_vars=None):
 

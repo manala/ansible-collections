@@ -9,7 +9,7 @@ display = Display()
 
 
 class ActionModule(ActionBase):
-    '''Handle path'''
+    """Handle path"""
 
     def run(self, tmp=None, task_vars=None):
 
