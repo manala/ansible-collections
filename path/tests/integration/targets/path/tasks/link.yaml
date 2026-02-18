@@ -13,8 +13,10 @@
       - { path: file, state: touch }
     paths:
       - { path: explicit_file, state: link, src: file }
+      - { path: explicit_missing_file, state: link, src: missing_file, force: true }
     expected:
-      - { path: explicit_file, exists: true, islnk: true, lnk_target: file }
+      - { path: explicit_file, exists: true, islnk: true, lnk_target: file, readable: true }
+      - { path: explicit_missing_file, exists: true, islnk: true, lnk_target: missing_file, readable: false }
   block:
 
     - name: link | Prepare root
@@ -51,6 +53,7 @@
           - stats.results[index].stat.exists == expected[index].exists
           - stats.results[index].stat.islnk == expected[index].islnk
           - stats.results[index].stat.lnk_target == expected[index].lnk_target
+          - stats.results[index].stat.readable == expected[index].readable
       loop: "{{ expected }}"
       loop_control:
         index_var: index
