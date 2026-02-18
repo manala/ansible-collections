@@ -10,31 +10,31 @@
     root:
       path: "{{ [playbook_dir, '..', '..', '..', 'path', 'file'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
     fixtures:
-      - {path: explicit_present, mode: '0664', content: 'unchanged'}
+      - { path: explicit_present, mode: '0664', content: 'unchanged' }
     paths:
-      - {path: explicit_present, state: file, mode: '0644'}
-      - {path: explicit_absent, state: file}
-      - {path: implicit_content, content: content}
-      - {path: implicit_present_content, state: present, content: content}
-      - {path: explicit_content, state: file, content: content}
-      - {path: implicit_file, file: file}
-      - {path: implicit_present_file, state: present, file: file}
-      - {path: explicit_file, state: file, file: file}
-      - {path: implicit_template, template: template.j2, vars: {content: template}}
-      - {path: implicit_present_template, state: present, template: template.j2, vars: {content: template}}
-      - {path: explicit_template, state: file, template: template.j2, vars: {content: template}}
+      - { path: explicit_present, state: file, mode: '0644' }
+      - { path: explicit_absent, state: file }
+      - { path: implicit_content, content: content }
+      - { path: implicit_present_content, state: present, content: content }
+      - { path: explicit_content, state: file, content: content }
+      - { path: implicit_file, file: file }
+      - { path: implicit_present_file, state: present, file: file }
+      - { path: explicit_file, state: file, file: file }
+      - { path: implicit_template, template: template.j2, vars: { content: template } }
+      - { path: implicit_present_template, state: present, template: template.j2, vars: { content: template } }
+      - { path: explicit_template, state: file, template: template.j2, vars: { content: template } }
     expected:
-      - {path: explicit_present, exists: true, mode: '0644', content: 'unchanged'}
-      - {path: explicit_absent, exists: true, mode: '0644', content: ''}
-      - {path: implicit_content, exists: true, mode: '0644', content: content}
-      - {path: implicit_present_content, exists: true, mode: '0644', content: content}
-      - {path: explicit_content, exists: true, mode: '0644', content: content}
-      - {path: implicit_file, exists: true, mode: '0644', content: file}
-      - {path: implicit_present_file, exists: true, mode: '0644', content: file}
-      - {path: explicit_file, exists: true, mode: '0644', content: file}
-      - {path: implicit_template, exists: true, mode: '0644', content: template}
-      - {path: implicit_present_template, exists: true, mode: '0644', content: template}
-      - {path: explicit_template, exists: true, mode: '0644', content: template}
+      - { path: explicit_present, exists: true, mode: '0644', content: 'unchanged' }
+      - { path: explicit_absent, exists: true, mode: '0644', content: '' }
+      - { path: implicit_content, exists: true, mode: '0644', content: content }
+      - { path: implicit_present_content, exists: true, mode: '0644', content: content }
+      - { path: explicit_content, exists: true, mode: '0644', content: content }
+      - { path: implicit_file, exists: true, mode: '0644', content: file }
+      - { path: implicit_present_file, exists: true, mode: '0644', content: file }
+      - { path: explicit_file, exists: true, mode: '0644', content: file }
+      - { path: implicit_template, exists: true, mode: '0644', content: template }
+      - { path: implicit_present_template, exists: true, mode: '0644', content: template }
+      - { path: explicit_template, exists: true, mode: '0644', content: template }
   block:
 
     - name: file | Prepare root
@@ -42,8 +42,8 @@
         path: "{{ item.path }}"
         state: "{{ item.state }}"
       loop:
-        - {path: "{{ root.path }}", state: absent}
-        - {path: "{{ root.path }}", state: directory}
+        - { path: "{{ root.path }}", state: absent }
+        - { path: "{{ root.path }}", state: directory }
 
     - name: file | Prepare fixtures
       ansible.builtin.copy:  # noqa: risky-file-permissions

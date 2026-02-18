@@ -10,15 +10,15 @@
     root:
       path: "{{ [playbook_dir, '..', '..', '..', 'path', 'exclusify'] | ansible.builtin.path_join | ansible.builtin.realpath }}"
     fixtures:
-      - {path: foo, state: touch}
-      - {path: bar, state: touch}
+      - { path: foo, state: touch }
+      - { path: bar, state: touch }
     paths:
-      - {path: bar, content: bar}
-      - {path: baz, content: baz}
+      - { path: bar, content: bar }
+      - { path: baz, content: baz }
     expected:
-      - {path: foo, exists: false}
-      - {path: bar, exists: true}
-      - {path: baz, exists: true}
+      - { path: foo, exists: false }
+      - { path: bar, exists: true }
+      - { path: baz, exists: true }
   block:
 
     - name: exclusify | Prepare root
@@ -26,8 +26,8 @@
         path: "{{ item.path }}"
         state: "{{ item.state }}"
       loop:
-        - {path: "{{ root.path }}", state: absent}
-        - {path: "{{ root.path }}", state: directory}
+        - { path: "{{ root.path }}", state: absent }
+        - { path: "{{ root.path }}", state: directory }
 
     - name: exclusify | Prepare fixtures
       ansible.builtin.file:  # noqa: risky-file-permissions
