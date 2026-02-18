@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Support "force" argument on path link, to create link even if the source does not exist
+
 ## [2.3.0] - 2026-01-02
 
 ### Added
