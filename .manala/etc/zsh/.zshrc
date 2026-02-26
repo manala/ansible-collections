@@ -77,7 +77,6 @@ plugins=(
   zsh-syntax-highlighting
   fzf
   ansible
-  terraform
 )
 
 source $ZSH/oh-my-zsh.sh
